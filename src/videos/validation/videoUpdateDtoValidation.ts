@@ -48,11 +48,11 @@ export const videoUpdateDtoValidation = (videoUpdate: videoUpdateDto) => {
     ) {
         errors.push({ field: "availableResolutions", message: "Unacceptable resolution name(s)" });
     }
-    if (
-       typeof !videoUpdate.publicationDate !== typeof new Date()
-
-    ) {
-        errors.push({ field: "publicationDate", message: "Unacceptable publication date format" });
-    }
+    // if (
+    //    typeof !videoUpdate.publicationDate !== typeof new Date()
+    //
+    // ) {
+    //     errors.push({ field: "publicationDate", message: "Unacceptable publication date format" });
+    // }
     return errors;
 };
