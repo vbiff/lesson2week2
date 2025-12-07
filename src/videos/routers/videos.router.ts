@@ -58,7 +58,7 @@ videosRouter.post("/", (req: Request<videoInputDto>, res: Response) => {
 videosRouter.put("/:id", (req: Request, res: Response) => {
   const errors: ValidationError[] = videoUpdateDtoValidation(req.body);
   if (errors.length > 0) {
-    res.status(HttpStatuses.BAD_REQUEST_400).send(createErrorMessage(errors));
+    res.status(HttpStatuses.BAD_REQUEST_400).json(createErrorMessage(errors));
     return;
   }
   const movieIndex: number = db.videos.findIndex((m) => m.id === +req.params.id);

@@ -21,7 +21,7 @@ export const videoUpdateDtoValidation = (videoUpdate: videoUpdateDto) => {
     // videoInput.author.trim().length < 2 ||
     videoUpdate.author.trim().length > 20
   ) {
-    errors.push({ field: "author", message: "Invalid author name" });
+    errors.push({ field: "author", message: "author" });
   }
   if (
     !videoUpdate.title ||
