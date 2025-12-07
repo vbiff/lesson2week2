@@ -94,7 +94,7 @@ videosRouter.put("/:id", (req: Request, res: Response) => {
 // delete video by id
 videosRouter.delete("/:id", (req: Request, res: Response) => {
   const movieIndex = db.videos.findIndex((m) => m.id === +req.params.id);
-  if (!movieIndex) {
+  if (movieIndex === -1) {
     res.status(HttpStatuses.NOT_FOUND_404);
     return;
   }
