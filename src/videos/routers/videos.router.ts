@@ -19,7 +19,7 @@ videosRouter.get("/", (req: Request, res: Response) => {
 videosRouter.get("/:id", (req: Request, res: Response) => {
   const movie = db.videos.find((m) => m.id === +req.params.id);
   if (!movie) {
-    res.status(HttpStatuses.NOT_FOUND_404);
+    res.sendStatus(HttpStatuses.NOT_FOUND_404);
     return;
   }
 
@@ -58,10 +58,12 @@ videosRouter.post("/", (req: Request<videoInputDto>, res: Response) => {
 videosRouter.put("/:id", (req: Request, res: Response) => {
   const errors: ValidationError[] = videoUpdateDtoValidation(req.body);
   if (errors.length > 0) {
-    res.status(HttpStatuses.BAD_REQUEST_400).json(createErrorMessage(errors));
+    res.status(HttpStatuses.BAD_REQUEST_400).send(createErrorMessage(errors));
     return;
   }
-  const movieIndex: number = db.videos.findIndex((m) => m.id === +req.params.id);
+  const movieIndex: number = db.videos.findIndex(
+    (m) => m.id === +req.params.id,
+  );
   if (movieIndex === -1) {
     res.sendStatus(HttpStatuses.NOT_FOUND_404);
     return;
@@ -93,11 +95,7 @@ videosRouter.put("/:id", (req: Request, res: Response) => {
 videosRouter.delete("/:id", (req: Request, res: Response) => {
   const movieIndex = db.videos.findIndex((m) => m.id === +req.params.id);
   if (movieIndex === -1) {
-    res
-      .status(HttpStatuses.NOT_FOUND_404)
-      .send(
-        createErrorMessage([{ field: "id", message: "Video not found" }]),
-      );
+    res.sendStatus(HttpStatuses.NOT_FOUND_404);
     return;
   }
   db.videos.splice(movieIndex, 1);
