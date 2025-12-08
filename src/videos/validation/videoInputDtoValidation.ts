@@ -1,5 +1,5 @@
 import { videoInputDto } from "../dto/video.input-dto";
-import { ValidationError } from "../types/validationError";
+import { ValidationError } from "../../core/types/validationError";
 import { AvailableResolutions } from "../types/video";
 
 export const videoInputDtoValidation = (videoInput: videoInputDto) => {

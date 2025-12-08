@@ -4,7 +4,7 @@ import { HttpStatuses } from "../../core/types/http-statuses";
 import { db } from "../../db/in-memory.db";
 import { videoInputDto } from "../dto/video.input-dto";
 import { videoInputDtoValidation } from "../validation/videoInputDtoValidation";
-import { ValidationError } from "../types/validationError";
+import { ValidationError } from "../../core/types/validationError";
 import { createErrorMessage } from "../../core/utils/error.utils";
 import { videoUpdateDtoValidation } from "../validation/videoUpdateDtoValidation";
 

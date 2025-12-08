@@ -1,7 +1,9 @@
 //db
 import { AvailableResolutions, Video } from "../videos/types/video";
+import {Blog} from "../blogs/types/blog";
 
 export const db = {
+    blogs: <Blog[]>[],
   videos: <Video[]>[
     {
       id: 0,

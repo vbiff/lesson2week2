@@ -1,4 +1,4 @@
-import { ValidationError } from "../types/validationError";
+import { ValidationError } from "../../core/types/validationError";
 import { AvailableResolutions } from "../types/video";
 import { videoUpdateDto } from "../dto/video.update-dto";
 
