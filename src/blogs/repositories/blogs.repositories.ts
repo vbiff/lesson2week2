@@ -2,6 +2,7 @@ import { Blog } from "../types/blog";
 import { db } from "../../db/in-memory.db";
 import { blogInputDto } from "../dto/blog.input_dto";
 
+
 export const blogsRepository = {
   findAll(): Blog[] {
     return db.blogs;

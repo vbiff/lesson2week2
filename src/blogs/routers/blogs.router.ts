@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { HttpStatuses } from "../../core/types/http-statuses";
 import { blogInputDto } from "../dto/blog.input_dto";
 import { blogsRepository } from "../repositories/blogs.repositories";
+import {createErrorMessage} from "../../core/utils/error.utils";
 
 export const blogRouter = Router();
 //get all
@@ -35,6 +36,13 @@ blogRouter.put("/:id", (req: Request, res: Response) => {
 
 //delete
 blogRouter.delete("/:id", (req: Request, res: Response) => {
+    const blog = blogsRepository.findById(req.params.id)
+    if (!blog) {
+        res
+            .status(HttpStatuses.NOT_FOUND_404)
+            .send(createErrorMessage([{ field: 'id', message: 'blog not found' }]));
+        return;
+    }
   blogsRepository.deleteBlog(req.params.id);
   res.sendStatus(HttpStatuses.NO_CONTENT_204);
 });
