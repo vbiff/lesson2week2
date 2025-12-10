@@ -11,10 +11,5 @@ describe("Testing API", () => {
     await request(app)
       .delete("/testing/all-data")
       .expect(HttpStatuses.NO_CONTENT_204);
-
-    const getResponse = await request(app)
-      .get("/videos")
-      .expect(HttpStatuses.OK_200);
-    expect(getResponse.body).toEqual([]);
   });
 });

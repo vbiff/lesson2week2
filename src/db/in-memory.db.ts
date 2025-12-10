@@ -1,39 +1,8 @@
 //db
-import { AvailableResolutions, Video } from "../videos/types/video";
 import { Blog } from "../blogs/types/blog";
 
 export const db = {
   blogs: <Blog[]>[],
-  videos: <Video[]>[
-    {
-      id: 0,
-      title: "string",
-      author: "string",
-      canBeDownloaded: true,
-      minAgeRestriction: null,
-      createdAt: "string",
-      publicationDate: "string",
-      availableResolutions: [AvailableResolutions.P144],
-    },
-    {
-      id: 1,
-      title: "string",
-      author: "string",
-      canBeDownloaded: true,
-      minAgeRestriction: null,
-      createdAt: "string",
-      publicationDate: "string",
-      availableResolutions: [AvailableResolutions.P240],
-    },
-    {
-      id: 2,
-      title: "string",
-      author: "string",
-      canBeDownloaded: true,
-      minAgeRestriction: null,
-      createdAt: "string",
-      publicationDate: "string",
-      availableResolutions: [AvailableResolutions.P720],
-    },
-  ],
+
+
 };

@@ -2,7 +2,6 @@ import express from "express";
 import { setupApp } from "../src/setup-app";
 import request from "supertest";
 import { HttpStatuses } from "../src/core/types/http-statuses";
-import { Blog } from "../src/blogs/types/blog";
 import { blogInputDto } from "../src/blogs/dto/blog.input_dto";
 
 describe("Test for CRUD blogs", () => {
@@ -40,7 +39,7 @@ describe("Test for CRUD blogs", () => {
   });
 
   it("Should get a blog by id", async () => {
-    const blog = await request(app)
+    await request(app)
       .get(`/blogs/${blogId}`)
       .expect(HttpStatuses.OK_200);
   });
@@ -49,7 +48,7 @@ describe("Test for CRUD blogs", () => {
       .delete(`/blogs/${blogId}`)
       .expect(HttpStatuses.NO_CONTENT_204);
 
-    const blogs = await request(app)
+    await request(app)
       .get(`/blogs/${blogId}`)
       .expect(HttpStatuses.NOT_FOUND_404);
   });
