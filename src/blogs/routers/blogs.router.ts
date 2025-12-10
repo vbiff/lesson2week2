@@ -29,6 +29,7 @@ blogRouter.post(
   body("name")
       .exists().withMessage({ field: "name", message: "Name is required" })
     .trim()
+      .isEmpty().withMessage({ field: "name", message: "Name is required" })
     .isLength({ max: 15 })
     .withMessage({ field: "name", message: "Name is too long. Should be less 15 symbols" }),
   body("description")
