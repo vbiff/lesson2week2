@@ -6,7 +6,7 @@ const urlPattern =
 const nameValidation = body("name")
   .trim()
   .exists()
-  .withMessage({ field: "name", message: "Name is required" })
+  .withMessage({ message: "Name is required" })
   .isLength({ min: 1, max: 15 })
   .withMessage({
     message: "Name is too long. Should be less 15 symbols",
