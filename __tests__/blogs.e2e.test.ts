@@ -20,7 +20,7 @@ describe("Test for CRUD blogs", () => {
   it("Should create a blog", async () => {
     const newBlog: blogInputDto = {
       description: "description",
-      name: "     ",
+      name: "NAME",
       websiteUrl: "https://length_101-DnZlTI1khUHpqOqCzftIYiSHCV8fKjYFQOoCIwmUczzW9V5K8cqY.com",
     };
 
