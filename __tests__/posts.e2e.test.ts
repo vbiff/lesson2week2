@@ -4,9 +4,10 @@ import request from "supertest";
 import { HttpStatuses } from "../src/core/types/http-statuses";
 import { blogInputDto } from "../src/blogs/dto/blog.input_dto";
 import { generateBasicAuthToken } from "../src/core/utils/generate-admin-auth-token";
-import { BLOGS_PATH } from "../src/core/paths/paths";
+import { PostInputDTO } from "../src/posts/dto/post-input-dto";
+import { BLOGS_PATH, POSTS_PATH } from "../src/core/paths/paths";
 
-describe("Test for CRUD blogs", () => {
+describe("Test for CRUD posts", () => {
   const app = express();
   setupApp(app);
 
@@ -18,6 +19,7 @@ describe("Test for CRUD blogs", () => {
       .expect(HttpStatuses.NO_CONTENT_204);
   });
 
+  //first we need to create a blog and get blogId
   let blogId = "";
 
   //post blog
@@ -45,62 +47,93 @@ describe("Test for CRUD blogs", () => {
 
     blogId = blogs.body[0].id;
   });
-  //get by id
-  it("Should get a blog by id", async () => {
-    await request(app)
-      .get(`${BLOGS_PATH}/${blogId}`)
-      .expect(HttpStatuses.OK_200);
 
-    await request(app)
-      .get(`${BLOGS_PATH}/wrongId`)
-      .expect(HttpStatuses.NOT_FOUND_404);
-  });
-  //update
-  it("Should update blog with valid id", async () => {
-    const updateBlog: blogInputDto = {
-      description: "description22",
-      name: "NAME22",
-      websiteUrl: "https://example22.com/",
+  let postId = "";
+
+  //post blog
+  it("Should create a post", async () => {
+    const newPost: PostInputDTO = {
+      title: "test",
+      shortDescription: "description",
+      content: "content",
+      blogId: blogId,
     };
 
     await request(app)
-      .put(`${BLOGS_PATH}/${blogId}`)
+      .post(POSTS_PATH)
       .set("Authorization", adminToken)
-      .send(updateBlog)
+      .send(newPost)
+      .expect(HttpStatuses.CREATED_201);
+  });
+  //get all
+  it("Should get all posts", async () => {
+    const posts = await request(app)
+      .get(POSTS_PATH)
+      .expect(HttpStatuses.OK_200);
+
+    expect(posts.body.length).toBe(1);
+
+    postId = posts.body[0].id;
+  });
+  //get by id
+  it("Should get a post by id", async () => {
+    await request(app)
+      .get(`${POSTS_PATH}/${postId}`)
+      .expect(HttpStatuses.OK_200);
+
+    await request(app)
+      .get(`${POSTS_PATH}/wrongId`)
+      .expect(HttpStatuses.NOT_FOUND_404);
+  });
+  //update
+  it("Should update post with valid id", async () => {
+    const updatePost: PostInputDTO = {
+      title: "test2",
+      shortDescription: "description2",
+      content: "content2",
+      blogId: blogId,
+    };
+
+    await request(app)
+      .put(`${POSTS_PATH}/${postId}`)
+      .set("Authorization", adminToken)
+      .send(updatePost)
       .expect(HttpStatuses.NO_CONTENT_204);
 
     const response = await request(app)
-      .get(`${BLOGS_PATH}/${blogId}`)
+      .get(`${POSTS_PATH}/${postId}`)
       .expect(HttpStatuses.OK_200);
 
     expect(response.body).toEqual({
-      description: "description22",
-      name: "NAME22",
-      websiteUrl: "https://example22.com/",
-      id: blogId,
+      id: postId,
+      blogName: "NAME",
+      title: "test2",
+      shortDescription: "description2",
+      content: "content2",
+      blogId: blogId,
     });
     // put wrong id
     await request(app)
-      .put(`${BLOGS_PATH}/wrongId`)
+      .put(`${POSTS_PATH}/wrongId`)
       .set("Authorization", adminToken)
-      .send(updateBlog)
+      .send(updatePost)
       .expect(HttpStatuses.NOT_FOUND_404);
   });
   //delete
-  it("Should delete blog by id", async () => {
+  it("Should delete post by id", async () => {
     await request(app)
-      .delete(`${BLOGS_PATH}/${blogId}`)
+      .delete(`${POSTS_PATH}/${postId}`)
       .set("Authorization", adminToken)
       .expect(HttpStatuses.NO_CONTENT_204);
 
     await request(app)
-      .get(`${BLOGS_PATH}/${blogId}`)
+      .get(`${POSTS_PATH}/${postId}`)
       .expect(HttpStatuses.NOT_FOUND_404);
   });
 
-  it("Shouldnt delete blog by id", async () => {
+  it("Shouldnt delete post by id", async () => {
     await request(app)
-      .delete(`${BLOGS_PATH}/${blogId}`)
+      .delete(`${POSTS_PATH}/${postId}`)
       .set("Authorization", adminToken)
       .expect(HttpStatuses.NOT_FOUND_404);
   });
