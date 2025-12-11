@@ -23,7 +23,7 @@ const content = body("content")
 const blogId = body("blogId")
     .trim()
     .exists()
-    .isLength({ max: 10 })
+    .isLength({ max: 100 })
     .withMessage({ message: "blogId is needed" })
 
 export const postInputDtoValidation = [
