@@ -10,8 +10,8 @@ const titleValidation = body("title")
         message: "Name is too long. Should be less 30 symbols",
     });
 const shortDescriptionValidation = body("shortDescription")
-    .trim()
     .exists().withMessage({ message: "Description is required" })
+    .trim()
     .isLength({ max: 100 })
     .withMessage({
         message: "description should be less than 100 symbols",
