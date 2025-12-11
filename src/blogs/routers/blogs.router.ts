@@ -27,10 +27,10 @@ blogRouter.get("/", (req: Request, res: Response) => {
 blogRouter.post(
   "/",
   body("name")
-      .exists().withMessage({ field: "name", message: "Name is required" })
+
     .trim()
-      .isEmpty().withMessage({ field: "name", message: "Name is required" })
-    .isLength({ max: 15 })
+      .exists().withMessage({ field: "name", message: "Name is required" })
+    .isLength({min: 1,  max: 15 })
     .withMessage({ field: "name", message: "Name is too long. Should be less 15 symbols" }),
   body("description")
     .trim()
