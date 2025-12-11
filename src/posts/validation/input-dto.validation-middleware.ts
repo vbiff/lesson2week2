@@ -11,6 +11,7 @@ const titleValidation = body("title")
     });
 const shortDescriptionValidation = body("shortDescription")
     .trim()
+    .exists().withMessage({ message: "Description is required" })
     .isLength({ max: 100 })
     .withMessage({
         message: "description should be less than 100 symbols",
