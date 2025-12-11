@@ -30,7 +30,10 @@ blogRouter.get("/:id", (req: Request, res: Response) => {
 });
 
 // update
-blogRouter.put("/:id", (req: Request, res: Response) => {
+blogRouter.put("/:id",
+    blogInputDtoValidation,
+    validationResultMiddleware,
+    (req: Request, res: Response) => {
   updateBlogHandler(req, res);
 });
 
